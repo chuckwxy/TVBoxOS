@@ -1,6 +1,8 @@
-name: tvbox_apk
+name: Test
 
 on:
+  schedule:
+    - cron: 59 */8 * * *
   workflow_dispatch:
     inputs:
       rebuild:
