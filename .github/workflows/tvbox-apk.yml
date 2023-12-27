@@ -17,7 +17,6 @@ on:
         description: 'arm64支持，不支持ijk解码'
         required: false
         type: boolean
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -89,14 +88,14 @@ jobs:
           ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
       - name: Prepare App
         if: ${{ env.commit }}
-        working-directory: TVBoxOSC
-        run: |
+         working-directory: TVBoxOSC
+         run: |
           rm -rf apk/
           mkdir -p apk/
           for file in `find ~ -name "*release*.apk" -print`; do
             mv "$file" apk/TVBox_${{ matrix.userName }}_${{ env.tag }}.apk
           done
-    - name: Upload App To Artifact
+          - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
         with:
           name: com.github.tvbox.osc
