@@ -96,10 +96,8 @@ jobs:
           for file in `find ~ -name "*release*.apk" -print`; do
             mv "$file" apk/TVBox_${{ matrix.userName }}_${{ env.tag }}.apk
           done
-      - name: Upload App To Artifact
+    - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
-        if: ${{ env.commit }}
         with:
-          name: ${{ matrix.userName }}-${{ matrix.repoName }}
-          path: |
-            TVBoxOSC/apk/*
+          name: com.github.tvbox.osc
+          path: ${{ github.workspace }}/apk/*
