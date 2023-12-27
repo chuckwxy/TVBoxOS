@@ -70,11 +70,10 @@ public class ApiDialog extends BaseDialog {
                     Hawk.put(HawkConfig.API_HISTORY, history);
                     listener.onchange(newApi);
                     dismiss();
-                    else {
+                    }else {
                     listener.onchange(null);
                     dismiss();
                     }
-                }
             }
         });
         findViewById(R.id.apiHistory).setOnClickListener(new View.OnClickListener() {
