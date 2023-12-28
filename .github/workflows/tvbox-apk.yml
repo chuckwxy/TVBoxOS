@@ -20,7 +20,7 @@ jobs:
       matrix:
         include:
           - userName: chuckwxy
-            repoName: TVBoxOS
+            repoName: TVBoxOSC
             branchName: main
     steps:
       - name: Checkout
