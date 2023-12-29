@@ -16,6 +16,8 @@ jobs:
           ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
       - name: Checkout Source Code
         run: |
+          upStream=https://github.com/${{ matrix.userName }}/${{ matrix.repoName }}
+          echo "upStream=$upStream" >> $GITHUB_ENV
           git clone ${{ env.upStream }} TVBoxOSC
           cd TVBoxOSC
       - name: Extra Modify
