@@ -32,6 +32,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+android { 
 signingConfigs {  
         release {  
             storeFile file('./keystore/keystore.jks')  
@@ -39,4 +40,10 @@ signingConfigs {
             keyAlias 'myalias'  
             keyPassword System.getenv('KEY_PASSWORD')  
         }  
+    }
+buildTypes {  
+        release {  
+            signingConfig signingConfigs.release  
+        }  
     }  
+}
