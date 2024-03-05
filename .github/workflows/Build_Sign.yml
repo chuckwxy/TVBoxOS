@@ -20,7 +20,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}  
         run: |  
           mkdir -p ./keystore  
-          curl -s -o ./keystore/keystore.jks -L -u "chuckwxy:$GITHUB_PASSWORD" "https://github.com/chuckwxy/wxy/raw/main/keystore.jks"  
+          curl -s -o ./keystore/keystore.jks -L -u "chuckwxy:$PASSWORD" "https://github.com/chuckwxy/wxy/raw/main/keystore.jks"  
         
       - name: Sign APK  
         env:  
