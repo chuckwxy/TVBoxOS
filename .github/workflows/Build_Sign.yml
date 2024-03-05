@@ -1,30 +1,44 @@
-name: Build and Sign APK
-on:
-#  push:
-#    branches:
-#      - main
-#  pull_request:
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Build With Gradle
-        run: |
-          chmod +x gradlew
-          ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
-      - name: Prepare App
-        run: |
-          mkdir -p ${{ github.workspace }}/apk/
-          for file in `find ~ -name "*.apk" -print`; do
-            mv "$file" ${{ github.workspace }}/apk/
-          done
-      - name: Upload App To Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: com.github.tvbox.osc
+name: Build and Sign APK  
+on:      
+  workflow_dispatch:  
+  
+jobs:  
+  build:  
+    runs-on: ubuntu-latest  
+    steps:  
+      - uses: actions/checkout@v3  
+        with:  
+          fetch-depth: 0  
+        
+      - name: Build With Gradle  
+        run: |  
+          chmod +x gradlew  
+          ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all  
+        
+      - name: Download keystore.jks from private repo  
+        env:   
+          GITHUB_PASSWORD: ${{ secrets.GITHUB_PASSWORD }}  
+        run: |  
+          mkdir -p ./keystore  
+          curl -s -o ./keystore/keystore.jks -L -u "chuckwxy:$GITHUB_PASSWORD" "https://github.com/chuckwxy/wxy/raw/main/keystore.jks"  
+        
+      - name: Sign APK  
+        env:  
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}  
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}  
+          KEYSTORE_PATH: ./keystore/keystore.jks  
+        run: |  
+          echo "Signing APK with keystore password: $KEYSTORE_PASSWORD"  
+          echo "Using key password: $KEY_PASSWORD"  
+          ./gradlew signRelease  
+        
+      - name: Prepare App  
+        run: |  
+          mkdir -p ${{ github.workspace }}/apk/  
+          mv ./app/build/outputs/apk/release/*.apk ${{ github.workspace }}/apk/  
+        
+      - name: Upload App To Artifact  
+        uses: actions/upload-artifact@v3  
+        with:  
+          name: com.github.tvbox.osc  
           path: ${{ github.workspace }}/apk/*
