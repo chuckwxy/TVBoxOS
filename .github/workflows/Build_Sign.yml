@@ -17,7 +17,7 @@ jobs:
         
       - name: Download keystore.jks from private repo  
         env:   
-          GITHUB_PASSWORD: ${{ secrets.GITHUB_PASSWORD }}  
+          PASSWORD: ${{ secrets.PASSWORD }}  
         run: |  
           mkdir -p ./keystore  
           curl -s -o ./keystore/keystore.jks -L -u "chuckwxy:$GITHUB_PASSWORD" "https://github.com/chuckwxy/wxy/raw/main/keystore.jks"  
