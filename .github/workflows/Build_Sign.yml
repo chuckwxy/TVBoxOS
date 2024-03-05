@@ -21,13 +21,14 @@ jobs:
            PASSWORD: ${{ secrets.PASSWORD }}  
         run: |  
           mkdir -p ./keystore  
-          curl -s -o ./keystore/keystore.jks -L -u "$USERNAME:$PASSWORD" "https://github.com/chuckwxy/wxy/raw/main/keystore.jks"  
+          curl -s -o ./keystore/keystore.jks -L -u "$USERNAME:$PASSWORD" "https://github.com/chuckwxy/wxy/bobm/main/keystore.jks"  
         
       - name: Sign APK  
         env:  
+          KEYSTORE_PATH: ./keystore/keystore.jks 
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}  
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}  
-          KEYSTORE_PATH: ./keystore/keystore.jks  
+          SIGNING_KEY_ALIAS: myalias 
         run: |  
           echo "Signing APK with keystore password: $KEYSTORE_PASSWORD"  
           echo "Using key password: $KEY_PASSWORD"  
