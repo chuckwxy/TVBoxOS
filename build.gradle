@@ -32,3 +32,11 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+signingConfigs {  
+        release {  
+            storeFile file('path/to/your/keystore.jks')  
+            storePassword System.getenv('KEYSTORE_PASSWORD')  
+            keyAlias 'myalias'  
+            keyPassword System.getenv('KEY_PASSWORD')  
+        }  
+    }  
